@@ -82,12 +82,23 @@
         <br>
         <div class="row">
           <div ng-repeat="tag in tags">
-            <div class="col-xs-3">
+            <div class="col-sm-3">
               <div class="thumbnail tag">
                 <span><i class="fa {{tag.image}}"></i><br>{{tag.text}}</span>
               </div>
             </div>
           </div>
+        </div>
+        <br>
+        <br>
+        <div class="form">
+          <form class="form-inline" role="search">
+            <div class="form-group">
+              <label for="search-more">Or search for something else &nbsp;&nbsp;</label>
+              <input type="text" name="search-more" size="35" class="form-control main-search" placeholder="What/how/where do you want to learn?">
+            </div>
+            <button type="submit" class="btn btn-default btn-success">Go!</button>
+          </form>
         </div>
       </div>
     </div>

@@ -9,4 +9,9 @@ var TagSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Resource'
   }]
-})
+});
+
+
+var Tag = mongoose.model('Tag', TagSchema);
+
+module.exports = Tag;
