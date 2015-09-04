@@ -22,6 +22,11 @@ app.get('/api/resources', function (req, res) {
   });
 });
 
+//create a new resource
+app.post('/api/resources', function (req, res) {
+
+})
+
 
 
 
