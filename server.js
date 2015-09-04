@@ -53,35 +53,34 @@ app.post('/api/resources', function (req, res) {
 //TAGS ROUTES
 //send back all tags
 app.get('/api/tags', function (req, res) {
-  Tag.find({}, function (err, tags) {
-    res.json(tags);
+  Resource.distinct('tags', function (err, foundTags) {
+    res.json(foundTags);
+  })
+})
+//send back all tags for a specific resource
+app.get('/api/resources/:resourceId/tags', function (req, res) {
+  var targetId = req.params.resourceId;
+
+  Resource.findOne({_id: targetId}, function (err, foundResource) {
+    res.json(foundResource.tags);
   });
 });
 
-//send back one tag
-app.get('/api/tags/:id', function (req, res) {
-  var targetId = req.params.id;
+//create a new tag embedded in a resource
+app.post('/api/resources/:resourceId/tags', function (req, res) {
+  //set value of the list id from url params
+  var resourceId = req.params.resourceId;  
+  //store new tag in memory with data from request body
+  var newTag = new Tag({ text: req.body.text });
 
-  Tag.findOne({_id: targetId}, function (err, foundTag) {
-    res.json(foundTag);
-  });
-});
-
-//create a new tag
-app.post('/api/tags', function (req, res) {
-  var newTag = new Tag({
-    image: req.body.image,
-    text: req.body.text
-  });
-
-  newTag.save(function (err, savedTag) {
-    res.json(savedTag);
+  //find resource in db by id and add new tag
+  Resource.findOne({_id: resourceId}, function (err, foundResource) {
+    foundResource.tags.push(newTag);
+    foundResource.save(function (err, savedResource) {
+      res.json(newTag);
+    });
   });
 }); 
-
-
-
-
 
 
 //set location for static files and angular app

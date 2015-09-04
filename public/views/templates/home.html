@@ -112,14 +112,17 @@
         <br>
         <span class="section-heading"><h1>Popular Learning Resources</h1></span>
         <div ng-repeat="resource in resources">
-          <div class="row">
+          <div ng-show="resource.name"class="row">
             <div class="col-xs-2">
               <div class="thumbnail resource"><img src="{{resource.image}}" class="logo"></div>
             </div>
             <div class="col-xs-10">
               <a href="{{resource.website}}"><h3 style="font-size:20px">{{resource.name}}</h3></a>
               <p><strong>Price: </strong>{{resource.price}}</p>
-              <p><strong>Tags: </strong></p>
+              <p ng-show="resource.tags.length > 0"><strong>Tags: </strong>
+                <span ng-repeat="tag in resource.tags">
+                  {{tag.text}}
+                </span></p>
               <p>{{resource.description}}</p>
             </div>
           </div>

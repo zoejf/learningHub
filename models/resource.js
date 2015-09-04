@@ -8,10 +8,7 @@ var ResourceSchema = new Schema ({
   price: String,
   image: String,
   description: String, 
-  tags: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Tag'
-  }]
+  tags: [Tag.schema]
 });
 
 var Resource = mongoose.model('Resource', ResourceSchema);
