@@ -9,7 +9,7 @@ var express = require('express'),
 mongoose.connect(
   process.env.MONGOLAB_URI ||
   process.env.MONGOHQ_URL ||
-  'mongodb://localhost/where_to_learn'
+  'mongodb://localhost/learningHub'
 );
 
 // configure body-parser
@@ -26,7 +26,7 @@ app.get('/api/resources', function (req, res) {
 });
 
 //send back one specific resource - find by id
-app.get('/api/resources/:id', function (req, res) {
+app.get('/api/resources/:id', function (req, res) { 
   var targetId = req.params.id;
 
   Resource.findOne({_id: targetId}, function (err, foundResource) {
@@ -47,7 +47,42 @@ app.post('/api/resources', function (req, res) {
   newResource.save(function (err, savedResource) {
     res.json(savedResource);
   });
-}); 
+});
+
+//delete a resource
+app.delete('/api/resources/:id', function (req, res) {
+  var targetId = req.params.id;
+  //find tag in db by id and remove it
+  Resource.findOneAndRemove({_id: targetId}, function (err, deletedResource) {
+    res.json(deletedResource);
+  });
+});
+
+//assign a new tag to a resource (update the resource)
+app.put('/api/resources/:id', function (req, res) {
+  //set the value of the reference id
+  var targetId = req.params.id;
+  //set the value of the tag id from the form/input
+  var tagId = req.body.id;
+  console.log(tagId)
+  var tagReference = Tag.find({_id: tagId});
+  console.log(tagReference)
+
+  Resource.findOne({_id: targetId}, function (err, foundResource) {
+    foundResource.tags.push(tagReference._id);
+    foundResource.save(function (err, savedResource) {
+      res.json(savedResource);
+    })
+  })
+
+})
+  //find resource by params id 
+  //find tag by params id
+
+  //push tag into resource.tags array
+  //push resource into tag.resources array
+
+
 //end of resource routes
 
 //TAGS ROUTES
@@ -79,9 +114,14 @@ app.post('/api/tags', function (req, res) {
   });
 }); 
 
-
-
-
+//delete a tag
+app.delete('/api/tags/:id', function (req, res) {
+  var targetId = req.params.id;
+  //find tag in db by id and remove it
+  Tag.findOneAndRemove({_id: targetId}, function (err, deletedTag) {
+    res.json(deletedTag);
+  });
+});
 
 
 //set location for static files and angular app
