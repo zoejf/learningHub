@@ -120,8 +120,8 @@
               <a href="{{resource.website}}"><h3 style="font-size:20px">{{resource.name}}</h3></a>
               <p><strong>Price: </strong>{{resource.price}}</p>
               <p ng-show="resource.tags.length > 0"><strong>Tags: </strong>
-                  <span ng-repeat="tag in resource.tags">
-                    {{tag}}
+                  <span ng-repeat="tagId in resource.tags">
+                    <span ng-init="tag = getTags(tagId)">{{tag.text}}</span>
                   </span>
               </p>
               <p>{{resource.description}}</p>
