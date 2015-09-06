@@ -9,7 +9,7 @@ var express = require('express'),
 mongoose.connect(
   process.env.MONGOLAB_URI ||
   process.env.MONGOHQ_URL ||
-  'mongodb://localhost/learningHub'
+  'mongodb://localhost/where_to_learn'
 );
 
 // configure body-parser
@@ -49,6 +49,11 @@ app.post('/api/resources', function (req, res) {
   });
 });
 
+//update a resource
+app.post('/api/resources/:id', function (req, res) {
+  
+});
+
 //delete a resource
 app.delete('/api/resources/:id', function (req, res) {
   var targetId = req.params.id;
@@ -58,18 +63,18 @@ app.delete('/api/resources/:id', function (req, res) {
   });
 });
 
-//assign a new tag to a resource (update the resource)
-app.put('/api/resources/:id', function (req, res) {
+//assign an existing tag to a resource (update the resource)
+app.put('/api/resources/:id/tags', function (req, res) {
   //set the value of the reference id
   var targetId = req.params.id;
   //set the value of the tag id from the form/input
   var tagId = req.body.id;
-  console.log(tagId)
-  var tagReference = Tag.find({_id: tagId});
-  console.log(tagReference)
+  console.log(tagId);
+  // var tagReference = Tag.find({_id: tagId});
+  // console.log(tagReference);
 
   Resource.findOne({_id: targetId}, function (err, foundResource) {
-    foundResource.tags.push(tagReference._id);
+    foundResource.tags.push(tagId);
     foundResource.save(function (err, savedResource) {
       res.json(savedResource);
     })

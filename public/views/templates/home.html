@@ -119,9 +119,9 @@
             <div class="col-xs-10">
               <a href="{{resource.website}}"><h3 style="font-size:20px">{{resource.name}}</h3></a>
               <p><strong>Price: </strong>{{resource.price}}</p>
-              <p ng-show="resource.tags > 0"><strong>Tags: </strong>
+              <p ng-show="resource.tags.length > 0"><strong>Tags: </strong>
                   <span ng-repeat="tag in resource.tags">
-                    {{tag.text}}
+                    {{tag}}
                   </span>
               </p>
               <p>{{resource.description}}</p>

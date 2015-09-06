@@ -41,7 +41,7 @@ app.controller('HomeCtrl', ['$scope', 'Resource', 'Tag', function ($scope, Resou
   $scope.resources = Resource.query();
   // $scope.question = {};
   // $scope.tags = [{id:1, image: 'fa-usd', text: 'Free'}, {id: 2, image: 'fa-graduation-cap', text: 'Degree or Certificate'}, {id: 3, image: 'fa-certificate', text: 'Professional Teachers'}, {id: 4, image: 'fa-laptop', text: 'Learn online'}, {id: 5, image: 'fa-users', text:'Learn from Community Members'}, {id: 6, image: 'fa-university', text:'In-Person Classes'}];
-  $scope.tags = Tag.query();
+  // $scope.resource.tag = Tag.get();
 
   //function to add a tag to a resource (update resource.tags array AND tag.resources array)
       //find resource by  id 
