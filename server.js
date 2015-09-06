@@ -49,6 +49,23 @@ app.post('/api/resources', function (req, res) {
   });
 });
 
+//assign an existing tag to a resource (update the resource.tags array)
+app.put('/api/resources/:id/tags', function (req, res) {
+  //set the value of the reference id
+  var targetId = req.params.id;
+  //set the value of the tag id from the form/input
+  var tagId = req.body.id;
+  console.log(tagId);
+  // var tagReference = Tag.find({_id: tagId});
+  // console.log(tagReference);
+  Resource.findOne({_id: targetId}, function (err, foundResource) {
+    foundResource.tags.push(tagId);
+    foundResource.save(function (err, savedResource) {
+      res.json(savedResource);
+    });
+  });
+});
+
 //delete a tag from a resource
 app.delete('/api/resources/:resourceId/tags/:id', function (req, res) {
   //set the value of the list id and tag id
@@ -78,24 +95,6 @@ app.delete('/api/resources/:id', function (req, res) {
   });
 });
 
-//assign an existing tag to a resource (update the resource)
-app.put('/api/resources/:id/tags', function (req, res) {
-  //set the value of the reference id
-  var targetId = req.params.id;
-  //set the value of the tag id from the form/input
-  var tagId = req.body.id;
-  console.log(tagId);
-  // var tagReference = Tag.find({_id: tagId});
-  // console.log(tagReference);
-
-  Resource.findOne({_id: targetId}, function (err, foundResource) {
-    foundResource.tags.push(tagId);
-    foundResource.save(function (err, savedResource) {
-      res.json(savedResource);
-    })
-  })
-
-})
   //find resource by params id 
   //find tag by params id
 
