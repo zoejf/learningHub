@@ -49,9 +49,24 @@ app.post('/api/resources', function (req, res) {
   });
 });
 
-//update a resource
-app.post('/api/resources/:id', function (req, res) {
-  
+//delete a tag from a resource
+app.delete('/api/resources/:resourceId/tags/:id', function (req, res) {
+  //set the value of the list id and tag id
+  var resourceId = req.params.resourceId;
+  var tagId = req.params.id;
+  console.log("resourceId",resourceId);
+  console.log("tagId", tagId);
+
+  //find resource in db by id
+  Resource.findOne({_id: resourceId}, function (err, foundResource) {
+    //find tag in array of reference ids
+    var foundTag = foundResource.tags.indexOf(tagId);
+    console.log("foundTag: ", foundTag);
+    foundResource.tags.splice(foundTag, 1);
+    foundResource.save(function (err, savedResource) {
+      res.json(foundResource);
+    });
+  });
 });
 
 //delete a resource
